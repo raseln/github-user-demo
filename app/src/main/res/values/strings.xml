@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Github Users</string>
+    <string name="profile_avatar">profile avatar</string>
+    <string name="user_location">From: %s</string>
+    <string name="user_company">Company: %s</string>
+    <string name="user_email">Email: %s</string>
+    <string name="user_followers">Being followed by: %s</string>
+    <string name="user_following">Following: %s people(s)</string>
+    <string name="user_public_repo">Public repos: %s</string>
+    <string name="user_public_gists">Public Gists: %s</string>
+    <string name="user_private_repo">Owned private repos: %s</string>
+    <string name="user_created_at">Github member since: %s</string>
+    <string name="user_updated_at">Info Last updated at: %s</string>
+    <string name="see_more" tools:ignore="TypographyEllipsis">See more...</string>
+</resources>

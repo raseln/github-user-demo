@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.rasel.githubusers.ui.UserDetailViewModel" />
+
+        <variable
+            name="handler"
+            type="com.rasel.githubusers.interfaces.OnMoreClickListener" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@{viewModel.error}"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.error == null || viewModel.error.isEmpty() ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Error" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                android:visibility="@{viewModel.error == null || viewModel.error.isEmpty() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/avatar_container"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="75dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/profile_avatar"
+                        image_url="@{viewModel.userDetailsLiveData.avatarUrl}"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:contentDescription="@string/profile_avatar"
+                        tools:src="@tools:sample/avatars" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@{viewModel.userDetailsLiveData.name}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/avatar_container"
+                    tools:text="@tools:sample/full_names" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="@{@string/user_location(viewModel.userDetailsLiveData.location)}"
+                    android:textColor="@color/black"
+                    android:visibility="@{viewModel.userDetailsLiveData.location == null || viewModel.userDetailsLiveData.location.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/user_name" />
+
+                <TextView
+                    android:id="@+id/company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_company(viewModel.userDetailsLiveData.company)}"
+                    android:textColor="@color/black"
+                    android:visibility="@{viewModel.userDetailsLiveData.company == null || viewModel.userDetailsLiveData.company.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/location" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_email(viewModel.userDetailsLiveData.email)}"
+                    android:textColor="@color/black"
+                    android:visibility="@{viewModel.userDetailsLiveData.email == null || viewModel.userDetailsLiveData.email.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/company" />
+
+                <TextView
+                    android:id="@+id/followers"
+                    is_visible="@{viewModel.userDetailsLiveData.followers}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_followers(viewModel.userDetailsLiveData.followers)}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/email" />
+
+                <TextView
+                    android:id="@+id/following"
+                    is_visible="@{viewModel.userDetailsLiveData.following}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_following(viewModel.userDetailsLiveData.following)}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followers" />
+
+                <TextView
+                    android:id="@+id/public_repo"
+                    is_visible="@{viewModel.userDetailsLiveData.publicRepos}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_public_repo(viewModel.userDetailsLiveData.publicRepos)}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/following" />
+
+                <TextView
+                    android:id="@+id/public_gists"
+                    is_visible="@{viewModel.userDetailsLiveData.publicGists}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_public_gists(viewModel.userDetailsLiveData.publicGists)}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/public_repo" />
+
+                <TextView
+                    android:id="@+id/private_repo"
+                    is_visible="@{viewModel.userDetailsLiveData.ownedPrivateRepos}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_private_repo(viewModel.userDetailsLiveData.ownedPrivateRepos)}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/public_gists" />
+
+                <TextView
+                    android:id="@+id/created_at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_created_at(viewModel.userDetailsLiveData.formattedCreatedDate)}"
+                    android:textColor="@color/black"
+                    android:visibility="@{viewModel.userDetailsLiveData.createdAt == null || viewModel.userDetailsLiveData.createdAt.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/private_repo" />
+
+                <TextView
+                    android:id="@+id/updated_at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{@string/user_updated_at(viewModel.userDetailsLiveData.formattedUpdatedDate)}"
+                    android:textColor="@color/black"
+                    android:visibility="@{viewModel.userDetailsLiveData.updatedAt == null || viewModel.userDetailsLiveData.updatedAt.isEmpty() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/created_at" />
+
+                <TextView
+                    android:id="@+id/see_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{(v) ->handler.onSeeMoreClick(viewModel.userDetailsLiveData.htmlUrl)}"
+                    android:padding="5dp"
+                    android:text="@string/see_more"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:visibility="@{viewModel.error == null || viewModel.error.isEmpty() ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="@id/private_repo"
+                    app:layout_constraintTop_toBottomOf="@id/updated_at" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
